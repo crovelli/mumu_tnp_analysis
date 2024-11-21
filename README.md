@@ -14,9 +14,9 @@ https://github.com/noepalm/mumu_tnp_analysis/tree/develTnPJpsi
 
   cmssw-el7
 
-  cmsrel CMSSW_11_2_0
+  scramv1 project -n TnpLowMass_CMSSW_11_2_0 CMSSW CMSSW_11_2_0
 
-  cd CMSSW_11_2_0/src
+  cd TnpLowMass_CMSSW_11_2_0/src
 
   cmsenv
   
