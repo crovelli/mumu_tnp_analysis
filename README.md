@@ -1,9 +1,12 @@
 # mumu_tnp_analysis
 
-# This repo is based on 
-  https://github.com/crovelli/egm_tnp_analysis/tree/develTnPJpsi
-  with additions from 
-  https://github.com/noepalm/mumu_tnp_analysis/tree/develTnPJpsi
+This repo is based on 
+
+https://github.com/crovelli/egm_tnp_analysis/tree/develTnPJpsi
+
+with additions from 
+
+https://github.com/noepalm/mumu_tnp_analysis/tree/develTnPJpsi
 
 # Getting started:
 
