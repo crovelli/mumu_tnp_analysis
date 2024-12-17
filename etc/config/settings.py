@@ -13,7 +13,8 @@ is_etaBin3 = False
 # flag to be Tested
 
 DoubleMu = 'probePathFired == 1'		       		       # trigger fired
-#DoubleMu += ' && Jpsi_m1_bestL1dR < 0.3 && Jpsi_m2_bestL1dR < 0.3'    # L1 candidates matched to offline muons   #chiara
+DoubleMu += ' && Jpsi_m2_bestHLTdR<0.3'		       		       # trigger fired by this HLT candidate
+DoubleMu += ' && Jpsi_m2_bestL1dR < 0.3'                               # L1 candidates matched to offline probe
 
 # flag to be Tested
 flags = {
@@ -69,13 +70,9 @@ weightName = 'weight'    # 1 for data; pu_weight for MC
 
 #############################################################
 # Bining definition  [can be nD bining]
-
-#deltaR_bins = [ { 'var' : 'Jpsi_muonsDr', 'type' : 'float' , 'bins' : [0.0, 0.16, 0.32, 0.48, 0.8] } ] #5 bins in [0, 0.8] range
-deltaR_bins = [ { 'var' : 'Jpsi_muonsDr', 'type' : 'float' , 'bins' : [0.0, 0.35, 1.5] } ] 
-pt_bins     = [ { 'var' : 'Jpsi_m2_pt', 'type' : 'float' , 'bins' : [2., 3., 4., 5., 6., 7., 8, 9., 10., 15., 20., 30.]} ]
-###pt_bins     = [ { 'var' : 'Jpsi_m2_pt', 'type' : 'float' , 'bins' : [0, 6.5, 10., 15., 20., 30.]} ]
+deltaR_bins = [ { 'var' : 'Jpsi_muonsDr', 'type' : 'float' , 'bins' : [0.0, 0.45, 0.6, 1.2] } ] 
+pt_bins     = [ { 'var' : 'Jpsi_m2_pt', 'type' : 'float' , 'bins' : [2.5, 4., 5., 6., 7., 8., 9., 10., 12., 14., 16., 18., 20., 25., 30., 40., 50.]} ]
 eta_bins    = [ { 'var' : 'Jpsi_m2_eta', 'type' : 'float' , 'bins' : [-2.6, -2.05, -1.5, -0.75, 0, 0.75, 1.5, 2.05, 2.6]} ]
-#               { 'var' : 'abs(Jpsi_m2_eta)', 'type' : 'float' , 'bins' : [0, 1.4, 2.6]},
 
 if is_vs_deltaR:
     biningDef = deltaR_bins + pt_bins
@@ -89,17 +86,17 @@ else:
 #############################################################
 # Cuts definition for all samples
 
-cutBase = ''       # tag fired already applied at ntuples level; here preselection
+cutBase = ''       
 
 ## turn-on cuts
-cutBase += 'Jpsi_m1_pt > 1. && Jpsi_m2_pt > 1.'
+cutBase += 'Jpsi_m1_pt > 2. && Jpsi_m2_pt > 2.'
 cutBase += ' && Jpsi_m1_abseta < 2.4 && Jpsi_m2_abseta < 2.4' 
 cutBase += ' && Jpsi_m1_mediumId && Jpsi_m2_mediumId' 
 cutBase += ' && Jpsi_fit_vprob > 0.005'
 cutBase += ' && Jpsi_muonsDz<1'
-# deltaR(tag, probe)>0.3
 cutBase += ' && Jpsi_m1_trgobj_dR<0.3'     
-cutBase += ' && Jpsi_nonfit_mass > 2.6 && Jpsi_nonfit_mass < 3.5' 
+cutBase += ' && Jpsi_m1_bestL1dR < 0.3'    
+cutBase += ' && Jpsi_nonfit_mass > 2.9 && Jpsi_nonfit_mass < 3.3' 
 
 if is_tagInEB:
     cutBase += ' && Jpsi_m1_eta < 1.4'
@@ -126,10 +123,18 @@ tnpParAltSigFitJPsi = [
     ]
 
 tnpParNomFitJPsi = [
-    "meanP[3.0969, 3.07, 3.11]","sigmaP[0.03, 0.01, 0.2]", "alphaLP[0.6, 0.05, 5.]","alphaRP[1.2, 0.1, 3.]","nLP[3.6, .01, 100.]","nRP[1.85, .010, 200.]",
-    "meanF[3.0969, 3.07, 3.11]","sigmaF[0.03, 0.01, 0.1]","alphaLF[1., 0.5, 2.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .1, 10.]","nRF[1., .01, 10.]",
-    "expalphaP[0., -50., .1]",
-    "expalphaF[0., -10., .1]",
+    #"meanP[3.08, 3.07, 3.10]","sigmaP[0.04, 0.02, 0.1]", "alphaLP[0.6, 0.05, 5.]","alphaRP[1.2, 0.1, 3.]","nLP[3.6, .01, 100.]","nRP[1.85, .010, 200.]",  # fino a 17 compreso  
+    #"meanF[3.09, 3.07, 3.11]","sigmaF[0.04, 0.02, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .1, 10.]","nRF[10., .1, 25.]",           # fino a 17 compreso   
+    "meanP[3.08, 3.07, 3.11]","sigmaP[0.04, 0.02, 0.1]", "alphaLP[0.6, 0.05, 5.]","alphaRP[1.2, 0.1, 3.]","nLP[3.6, .01, 100.]","nRP[1.85, .010, 200.]",   # 
+    #"meanF[3.10, 3.08, 3.11]","sigmaF[0.04, 0.03, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .1, 10.]","nRF[10., .1, 50.]",           # fino a 20 compreso
+    #"meanF[3.10, 3.08, 3.12]","sigmaF[0.045, 0.03, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .1, 10.]","nRF[10., .1, 50.]",          # fino a 23 compreso
+    #"meanF[3.10, 3.08, 3.12]","sigmaF[0.045, 0.03, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .001, 10.]","nRF[10., .001, 50.]",      # fino a 26 compreso     
+    #"meanF[3.10, 3.08, 3.12]","sigmaF[0.045, 0.03, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .001, 10.]","nRF[10., .00001, 1.]",     # fino a 32 compreso      
+    #"meanF[3.10, 3.08, 3.12]","sigmaF[0.045, 0.03, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .001, 20.]","nRF[10., .00001, 1.]",     # fino a 41 compreso    
+    "meanF[3.10, 3.08, 3.12]","sigmaF[0.045, 0.03, 0.1]","alphaLF[1., 0.5, 3.]","alphaRF[1.2, 0.5, 5.0]","nLF[1., .001, 20.]","nRF[10., .00001, 10.]",     
+    "expalphaP[0., -15., 1.]",
+    #"expalphaF[0., -10., 1.]",      fino a 23 compreso   
+    "expalphaF[0., -20., 1.]",     
     ]
      
 tnpParAltBkgFitJPsi = [
