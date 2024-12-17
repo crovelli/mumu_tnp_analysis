@@ -63,3 +63,5 @@ python tnpEGM_fitter.py etc/config/settings.py  --flag DoubleMu --doFit --altSig
 python tnpEGM_fitter.py etc/config/settings.py  --flag DoubleMu --doFit --altBkg	
 
 python tnpEGM_fitter.py etc/config/setting.py   --flag DoubleMu --sumUp
+
+python tnpEGM_fitter.py etc/config/setting.py   --flag DoubleMu --sumUpPlot
