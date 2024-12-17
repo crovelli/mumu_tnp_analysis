@@ -61,7 +61,7 @@ tnpFitter::tnpFitter(TFile *filein, std::string histname   ) : _useMinos(false),
   for( int ib = 0; ib <= hPass->GetXaxis()->GetNbins()+1; ib++ )
     // chiara, for JPsi
     //if(  hPass->GetXaxis()->GetBinCenter(ib) <= 60 || hPass->GetXaxis()->GetBinCenter(ib) >= 120 ) {
-    if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.6 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.5 ) {
+    if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.9 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.3 ) {
     //if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.6 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.5 ) {
      hPass->SetBinContent(ib,0);
      hFail->SetBinContent(ib,0);
@@ -70,8 +70,8 @@ tnpFitter::tnpFitter(TFile *filein, std::string histname   ) : _useMinos(false),
   _work = new RooWorkspace("w") ;
   // chiara, for JPsi 
   // _work->factory("x[50,130]");
-  _work->factory("x[2.6,3.5]");
-  //_work->factory("x[2.6,3.5]");
+  // _work->factory("x[2.6,3.5]");
+  _work->factory("x[2.9,3.3]");
 
   RooDataHist rooPass("hPass","hPass",*_work->var("x"),hPass);
   RooDataHist rooFail("hFail","hFail",*_work->var("x"),hFail);
@@ -80,8 +80,8 @@ tnpFitter::tnpFitter(TFile *filein, std::string histname   ) : _useMinos(false),
   // chiara, for JPsi 
   //_xFitMin = 60;
   //_xFitMax = 120;
-  _xFitMin = 2.6;
-  _xFitMax = 3.5;
+  _xFitMin = 2.9;
+  _xFitMax = 3.3;
   //_xFitMin = 2.6;
   //_xFitMax = 3.5;
 }
@@ -96,8 +96,8 @@ tnpFitter::tnpFitter(TH1 *hPass, TH1 *hFail, std::string histname  ) : _useMinos
   for( int ib = 0; ib <= hPass->GetXaxis()->GetNbins()+1; ib++ )
     // chiara, for JPsi 
     //if(  hPass->GetXaxis()->GetBinCenter(ib) <= 60 || hPass->GetXaxis()->GetBinCenter(ib) >= 120 ) {
-    if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.6 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.5 ) {
-      //if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.6 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.5 ) {
+    //if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.6 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.5 ) {
+    if(  hPass->GetXaxis()->GetBinCenter(ib) <= 2.9 || hPass->GetXaxis()->GetBinCenter(ib) >= 3.3 ) {
       hPass->SetBinContent(ib,0);
       hFail->SetBinContent(ib,0);
     }
@@ -105,8 +105,8 @@ tnpFitter::tnpFitter(TH1 *hPass, TH1 *hFail, std::string histname  ) : _useMinos
   _work = new RooWorkspace("w") ;
   // chiara, for JPsi  
   // _work->factory("x[50,130]");
-  _work->factory("x[2.6,3.5]");
   //_work->factory("x[2.6,3.5]");
+  _work->factory("x[2.9,3.3]");
   
   RooDataHist rooPass("hPass","hPass",*_work->var("x"),hPass);
   RooDataHist rooFail("hFail","hFail",*_work->var("x"),hFail);
@@ -115,10 +115,10 @@ tnpFitter::tnpFitter(TH1 *hPass, TH1 *hFail, std::string histname  ) : _useMinos
   // chiara, for JPsi   
   //_xFitMin = 60;
   //_xFitMax = 120;
-  _xFitMin = 2.6;
-  _xFitMax = 3.5;
   //_xFitMin = 2.6;
   //_xFitMax = 3.5;
+  _xFitMin = 2.9;
+  _xFitMax = 3.3;
 }
 
 
@@ -158,8 +158,8 @@ void tnpFitter::setWorkspaceJPsi(std::vector<std::string> workspace) {
   // //_work->factory(TString::Format("nSigF[%f,0.5,%f]",_nTotF*0.9,_nTotF*1.5));
   // _work->factory(TString::Format("nBkgF[%f,1e-8,%f]",TMath::Max(_nTotF*0.1, 2e-8), TMath::Max(_nTotF*1.5, 1.))); //min was 0.5
 
-  _work->factory(TString::Format("nSigP[%f,0.5,%f]",_nTotP*0.9,_nTotP*2));//*1.5 before (max)
-  _work->factory(TString::Format("nBkgP[%f,0.5,%f]",_nTotP*0.1,_nTotP*2));
+  _work->factory(TString::Format("nSigP[%f,0.5,%f]",_nTotP*0.9,_nTotP*2));//*1.5 before (max)         
+  _work->factory(TString::Format("nBkgP[%f,0.01,%f]",_nTotP*0.1,_nTotP*2));                           // nBkgP = 0.5 before       
   _work->factory(TString::Format("nSigF[%f,0.01,%f]",_nTotF*0.9,_nTotF*2));//min was 0.1, 
   _work->factory(TString::Format("nBkgF[%f,0.01,%f]",_nTotF*0.1,_nTotF*2));//min was 0.5
 
@@ -233,10 +233,10 @@ void tnpFitter::fits(bool mcTruth,string title) {
     // chiara, for JPsi
   //RooPlot *pPass = _work->var("x")->frame(60,120);
   //RooPlot *pFail = _work->var("x")->frame(60,120);
-  RooPlot *pPass = _work->var("x")->frame(2.6,3.5);
-  RooPlot *pFail = _work->var("x")->frame(2.6,3.5);
   //RooPlot *pPass = _work->var("x")->frame(2.6,3.5);
   //RooPlot *pFail = _work->var("x")->frame(2.6,3.5);
+  RooPlot *pPass = _work->var("x")->frame(2.9,3.3);
+  RooPlot *pFail = _work->var("x")->frame(2.9,3.3);
   pPass->SetTitle("passing probe");
   pFail->SetTitle("failing probe");
   
